@@ -1,4 +1,10 @@
+package callOfDuty;
 
+/**
+ * Represents the target on the map
+ * @author Xinyang Shen
+ *
+ */
 public abstract class Target {
 	// instance variables
 	/**
@@ -25,8 +31,8 @@ public abstract class Target {
 	private boolean horizontal;
 	
 	/**
-	 * 
-	 * 
+	 * Array of the same size as the target
+	 * Indicating the number of times a part of the target has been hit
 	 */
 	private int[][] hit;
 	
@@ -133,20 +139,43 @@ public abstract class Target {
 	
 	
 	// Other Methods
+	/**
+	 * If part of the target occupies the given row and column and it is not destroyed, mark the part as "hit"
+	 * index (0,0) indicated the head
+	 * @param given row
+	 * @param given column
+	 */
 	public void getShot (int row, int column) {
 		
 	}
 	
+	/**
+	 * returns the destroy status of the target
+	 * for tank, every part should be hit twice
+	 * @return true if every part of the target has been hit, false otherwise
+	 */
 	public boolean isDestroyed() {
 		
 		
 	}
 	
+	/**
+	 * returns the hit status of the target. This method is used to print the base.
+	 * @param given row
+	 * @param given column
+	 * @return true if the target has been hit at the given coordinate
+	 */
 	public boolean isHitAt(int row, int column) {
-		
-		
+			
 	}
 	
+	/**
+	 * Returns a single-character String to use in the Base's print method(which has been shot at)
+	 * Returns 'X' if the target has been destroyed
+	 * Returns 'O' if the target has not been destroyed
+	 * Returns 'T' if the tank has not been destroyed
+	 * Returns '-' is the target is ground
+	 */
 	public String toString() {
 		
 		
