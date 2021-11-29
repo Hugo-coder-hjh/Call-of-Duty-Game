@@ -1,3 +1,4 @@
+package callOfDuty;
 
 public class CallOfDutyGame {
 
