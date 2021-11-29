@@ -48,7 +48,7 @@ public class Base {
 	 * @param given orientation, whether it is horizontal or not
 	 * @return
 	 */
-	public boolean okToPlaceTargetAt(Target target, int row, int column, boolean horizontal):{
+	public boolean okToPlaceTargetAt(Target target, int row, int column, boolean horizontal){
 		
 	}
 	
