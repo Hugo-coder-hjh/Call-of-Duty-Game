@@ -166,7 +166,12 @@ public abstract class Target {
 	 * @return true if the target has been hit at the given coordinate
 	 */
 	public boolean isHitAt(int row, int column) {
-			
+		int[] coordinate = this.getCoordinate();
+		if(this.hit[row-coordinate[0]][column-coordinate[1]] >=1)
+		{	return true;
+		}else
+		{return false;
+	}
 	}
 	
 	/**

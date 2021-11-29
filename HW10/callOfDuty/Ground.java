@@ -33,7 +33,6 @@ public class Ground extends Target {
 
 	@Override
 	void explode() {
-		// TODO Auto-generated method stub
 
 	}
 	
@@ -45,6 +44,11 @@ public class Ground extends Target {
 	public String getTargetName() {
 		// Returns name of the target, which is "no target here"
 		return Ground.NAME;
+	}
+	
+	@Override
+	public boolean isDestroyed() {
+		return false;
 	}
 
 }
