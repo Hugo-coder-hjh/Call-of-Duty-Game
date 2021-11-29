@@ -38,7 +38,7 @@ public class Base {
 		}
 			
 	}
-
+    //
 	// methods
 	/**
 	 * Creates and place all targets randomly on the base
