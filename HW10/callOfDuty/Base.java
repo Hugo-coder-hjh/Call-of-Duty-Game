@@ -38,57 +38,88 @@ public class Base {
 		}
 			
 	}
-    //
+    
 	// methods
 	/**
-	 * Creates and place all targets randomly on the base
-	 * larger before small
-	 * buildings before tanks and oil drums
-	 */
-	public void placeAllTargetRandomly() {
-		//initial all instance target.
-				HeadQuarter headQuar=new HeadQuarter(this);
-			    Armory armoryH = new Armory(this);
-			    Armory armoryV = new Armory(this);
-			    Barrack barrackH1= new Barrack(this);
-			    Barrack barrackH2= new Barrack(this);
-			    Barrack barrackV= new Barrack(this);
-			    SentryTower st1=new SentryTower(this);
-			    SentryTower st2=new SentryTower(this);
-			    SentryTower st3=new SentryTower(this);
-			    SentryTower st4=new SentryTower(this);
-			    Tank tank1= new Tank(this);
-			    Tank tank2= new Tank(this);
-			    Tank tank3= new Tank(this);
-			    Tank tank4= new Tank(this);
-			    OilDrum od1= new OilDrum(this);
-			    OilDrum od2= new OilDrum(this);
-			    OilDrum od3= new OilDrum(this);
-			    OilDrum od4= new OilDrum(this);
-			    //put all target in place
-			    //placeTargetInplace is a method that could place one target in the OK place
-			    //add one target by one, and it would result in all targets in place.
-			    //be care of the horizontal and vertical value.
-				this.placeTargetInPlace(headQuar, true);
-				this.placeTargetInPlace(armoryH, true);
-				this.placeTargetInPlace(armoryV, false);
-				this.placeTargetInPlace(barrackH1, true);
-				this.placeTargetInPlace(barrackH2, true);
-				this.placeTargetInPlace(barrackV, false);
-				this.placeTargetInPlace(st1, true);
-				this.placeTargetInPlace(st2, true);
-				this.placeTargetInPlace(st3, true);
-				this.placeTargetInPlace(st4, true);	
-				this.placeTargetInPlace(tank1, true);
-				this.placeTargetInPlace(tank2, true);
-				this.placeTargetInPlace(tank3, true);
-				this.placeTargetInPlace(tank4, true);
-				this.placeTargetInPlace(od1, true);
-				this.placeTargetInPlace(od2, true);
-				this.placeTargetInPlace(od3, true);
-				this.placeTargetInPlace(od4, true);
-			}
-	
+	  * Creates and place all targets randomly on the base
+	  * larger before small
+	  * buildings before tanks and oil drums
+	  */
+	 public void placeAllTargetRandomly() {
+	  //first to place the head quarter(1)
+	  HeadQuarter headQua = new HeadQuarter(this);
+	  this.randomPlacement(headQua);
+	  
+	  // then place the armory(2)
+	  Armory Arm1 = new Armory(this);
+	  this.randomPlacement(Arm1);
+	  Armory Arm2 = new Armory(this);
+	  this.randomPlacement(Arm2);
+	  
+	  // place the barracks(3)
+	  Barrack Bar1 = new Barrack(this);
+	  this.randomPlacement(Bar1);
+	  Barrack Bar2 = new Barrack(this);
+	  this.randomPlacement(Bar2);
+	  Barrack Bar3 = new Barrack(this);
+	  this.randomPlacement(Bar3);
+	  
+	  //place the sentry towers(4)
+	  SentryTower Sen1 = new SentryTower(this);
+	  this.randomPlacement(Sen1);
+	  SentryTower Sen2 = new SentryTower(this);
+	  this.randomPlacement(Sen2);
+	  SentryTower Sen3 = new SentryTower(this);
+	  this.randomPlacement(Sen3);
+	  SentryTower Sen4 = new SentryTower(this);
+	  this.randomPlacement(Sen4);
+	  
+	  // place the tanks(4)
+	  Tank tank1 = new Tank(this);
+	  this.randomPlacement(tank1);
+	  Tank tank2 = new Tank(this);
+	  this.randomPlacement(tank2);
+	  Tank tank3 = new Tank(this);
+	  this.randomPlacement(tank3);
+	  Tank tank4 = new Tank(this);
+	  this.randomPlacement(tank4);
+	  
+	  // place the oil drums(4)
+	  OilDrum oil1 = new OilDrum(this);
+	  this.randomPlacement(oil1);
+	  OilDrum oil2 = new OilDrum(this);
+	  this.randomPlacement(oil2);
+	  OilDrum oil3 = new OilDrum(this);
+	  this.randomPlacement(oil3);
+	  OilDrum oil4 = new OilDrum(this);
+	  this.randomPlacement(oil4); 
+	  }
+	  
+
+	 
+	 /** 
+	  * helper method to randomly generate the location and orientation of the target
+	  * place the target if the orientation and location are legal
+	  * @param given target that's waited to be placed
+	  */
+	 private void randomPlacement(Target target){
+	  // initialize the random module
+	  Random rand = new Random();
+	  // generate random numbers for the target's location
+	  int row = rand.nextInt(10);
+	  int column = rand.nextInt(10);
+	  // generate random boolean for the target's orientation
+	  boolean horizontal = rand.nextBoolean();
+	  // if the placement is illegal, generate the random numbers and boolean value again
+	  while(okToPlaceTargetAt(target, row, column, horizontal) == false) {
+	   row = rand.nextInt(10);
+	   column = rand.nextInt(10);
+	   horizontal = rand.nextBoolean();
+	   } if(okToPlaceTargetAt(target, row, column, horizontal) == true) {
+	    // if the placement is legal, then place the target at this location with this orientation
+	       this.placeTargetAt(target, row, column, horizontal);
+	        }
+	  }
 	/**
 	 * returns true if it is OK to put the target with its head at this location, false otherwise
 	 * @param given target
@@ -112,7 +143,7 @@ public class Base {
 			return false;
 			}
 		//check whether it's tanks or oilDrum.
-		if(target.getTargetName().equals("tank")||target.getTargetName().equals("oilDrum")) {
+		if(target.getTargetName().equals("Tank")||target.getTargetName().equals("OilDrum")) {
 			//if it's tanks or oilDrum, it could place anywhere within ground.
 			//if it's ground return true.
 			if(this.getTargetsArray()[row][column].getTargetName().equals("ground")) {
@@ -185,16 +216,29 @@ public class Base {
 		
 	}
 	
+	
+	/**
+	 * helper function to decide whether is OK to shoot at
+	 * @param row
+	 * @param column
+	 * @return
+	 */
+	public boolean okToShootAt(int row, int column) {
+		if (row >= 10 || row < 0 || column >= 10 || column < 0) {
+			return false;
+		} return true;
+	}
+	
+	
 	/**
 	 * Attack the position specified by the row and the column.
 	 * @param row
 	 * @param column
 	 */
 	public void shootAt(int row, int column) {
-	// in case of the illegal situation
-	if (row >= 10 || row < 0 || column >= 10 || column < 0) {
-		System.out.println("Your shoot is out of bound");
-	}else {
+		// in case of the illegal situation
+		if (this.okToShootAt(row, column)) {
+			
 		// update the base after getting shot
 		this.getTargetsArray()[row][column].getShot(row, column);
 	}
@@ -308,29 +352,6 @@ public class Base {
 		this.destroyedTargetCount= i;
 	}
 
-
-	/**
-	 * place a target in random place
-	 * @param t to a Target
-	 * @param horizontal or not
-	 */
-	void placeTargetInPlace(Target t, boolean horizontal) {
-		//get a random coordinate.
-		//set the head of a target.
-		int[] randomCoordinate = this.getRandomCoordinate();
-		// if we could not put in this place, it gives another coordinate to the head of a target
-		boolean checkpoint =true;
-		while(checkpoint) {
-		if(this.okToPlaceTargetAt(t, randomCoordinate[0], randomCoordinate[1], horizontal)) {
-				this.placeTargetAt(t, randomCoordinate[0], randomCoordinate[1], horizontal);
-				//if we could place target in place exit the loop
-				checkpoint =false;
-			}else {
-			//if it cannot put in this place, get another random coordinator.
-				randomCoordinate = this.getRandomCoordinate();
-		}
-		}
-	}
 
 	/**
 	 * get one random coordinate

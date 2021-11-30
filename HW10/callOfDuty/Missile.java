@@ -34,31 +34,33 @@ public class Missile extends Weapon {
 		// get the type of this weapon
 		return Missile.NAME;
 	}
-
+  
+	
 	@Override
 	public void shootAt(int row, int column, Base base) {
 		// in case of the illegal situation
-		if (row >= 10 || row < 0 || column >= 10 || column < 0) {
-			System.out.println("Your shoot is out of bound");
-		}
+		if (this.okToShootAt(row, column)) {
 		
 		// count the increment shots
 		// if > 0 means we could shoot
 		if (this.getShotLeft() > 0) {
-			base.getBase().incrementShotsFired();	
+			base.incrementShotsCount();	
 			
 		// shoot at 3x3 area
 		for(int i = -1; i < 2; i++) {
 			for(int j = -1; j < 2; j++) {
-				base.getBase().shootAt(i + row, j + column);
+				base.shootAt(i + row, j + column);
 			}
 		}	
 			
 			
 		}
-	}
 	
 	// decrements the available missile shots
 	this.decrementShotLeft();
 
+}
+
+
+}
 }

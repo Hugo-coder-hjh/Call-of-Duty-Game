@@ -35,10 +35,13 @@ public class Armory extends Target {
 	}
 
 	@Override
-	void explode() {
-		// TODO Auto-generated method stub
-
+	public void explode() {
+		for(int i = -2; i < this.getHit().length + 2; i++) {
+			for(int j = -2; j < this.getHit()[0].length + 2; j++) {
+				this.getBase().shootAt(i + this.getCoordinate()[0], j + this.getCoordinate()[1]);
+			}
 	}
+		}
 
 	/**
 	 * Returns the name of the target: "Armory"

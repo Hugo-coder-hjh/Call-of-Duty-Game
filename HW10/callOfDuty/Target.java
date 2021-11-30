@@ -146,18 +146,46 @@ public abstract class Target {
 	 * @param given column
 	 */
 	public void getShot (int row, int column) {
-		
+		if(this.getBase().isOccupied(row, column)) {
+			
+		if(!this.isDestroyed()) {
+		//we should update the hit method
+		int[] coordinate = this.getCoordinate();
+		//set the hit[][]=1;
+		this.hit[row-coordinate[0]][column-coordinate[1]] =1;
+			}
+			
+		if(this.isDestroyed()) {
+			this.explode();
+			this.base.setDestroyedTargetCount(this.base.getDestroyedTargetCount() + 1);	
+		}
 	}
-	
+	}	
 	/**
 	 * returns the destroy status of the target
 	 * for tank, every part should be hit twice
 	 * @return true if every part of the target has been hit, false otherwise
 	 */
 	public boolean isDestroyed() {
-		
-		
+		int getHitPart = 0;
+		for (int i =0; i <this.getHit().length; i ++) {
+			for(int j = 0; j < this.getHit()[0].length; j ++) {
+				//determine whether each part of the target have been destroyed.
+				if (this.getHit()[i][j]==1) {
+				getHitPart ++;
+				}
+			}	
 	}
+		// if the getHitPart is the whole part of the target, meaning 6=2*3 for armory; 1=1*1 for tower for example
+		// then return true.
+		if (getHitPart == this.getHit().length*this.getHit()[0].length) {
+			return true;
+		}else {
+			return false;
+		}
+			
+		
+}
 	
 	/**
 	 * returns the hit status of the target. This method is used to print the base.
@@ -169,8 +197,8 @@ public abstract class Target {
 		int[] coordinate = this.getCoordinate();
 		if(this.hit[row-coordinate[0]][column-coordinate[1]] >=1)
 		{	return true;
-		}else
-		{return false;
+		}else{
+			return false;
 	}
 	}
 	
@@ -181,14 +209,17 @@ public abstract class Target {
 	 * Returns 'T' if the tank has not been destroyed
 	 * Returns '-' is the target is ground
 	 */
+	
 	public String toString() {
+		if (this.isDestroyed()) {
+			return "X";
+		}else {
+			return "O";
+		}
+	}
 		
+			
 		
 	}
 	
-	
-	
-	
-	
-	
-}
+

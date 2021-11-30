@@ -19,7 +19,7 @@ public class OilDrum extends Target {
 	/**
 	 * name of the target
 	 */
-	private static final String NAME = "Oil Drum";
+	private static final String NAME = "OilDrum";
 		
 	// constructor
 	/**
@@ -33,8 +33,11 @@ public class OilDrum extends Target {
 
 	@Override
 	void explode() {
-		// TODO Auto-generated method stub
-
+		for(int i = -2; i < this.getHit().length + 2; i++) {
+			for(int j = -2; j < this.getHit()[0].length + 2; j++) {
+				this.getBase().shootAt(i + this.getCoordinate()[0], j + this.getCoordinate()[1]);
+			}
+		}
 	}
 	
     /**

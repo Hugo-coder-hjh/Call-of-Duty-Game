@@ -20,7 +20,7 @@ public class HeadQuarter extends Target {
 	/**
 	 * name of the target
 	 */
-	private static final String NAME = "Head Quarter";
+	private static final String NAME = "HeadQuarter";
 	
 	// constructor
 	/**

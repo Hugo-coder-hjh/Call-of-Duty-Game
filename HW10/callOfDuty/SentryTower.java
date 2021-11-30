@@ -20,7 +20,7 @@ public class SentryTower extends Target {
 	/**
 	 * name of the target
 	 */
-	private static final String NAME = "Sentry Tower";
+	private static final String NAME = "SentryTower";
 	
 	// constructor
 	/**

@@ -19,7 +19,7 @@ public class Ground extends Target {
 	/**
 	 * name of the target
 	 */
-	private static final String NAME = "No Target";
+	private static final String NAME = "ground";
 	
 	// constructor
 	/**
@@ -50,5 +50,11 @@ public class Ground extends Target {
 	public boolean isDestroyed() {
 		return false;
 	}
+	
+	@Override
+	public String toString() {
+		return "-";
+	}
+	
 
 }

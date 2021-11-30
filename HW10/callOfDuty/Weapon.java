@@ -50,6 +50,8 @@ public abstract class Weapon {
 	  */
 	 public abstract void shootAt(int row, int column, Base base);
 	 
+	 
+	 
 	 // other methods
 	 /**
 	  * decrements the count of left shots
@@ -62,6 +64,17 @@ public abstract class Weapon {
 		}
 	 }
 	 
+	 /**
+		 * helper function to decide whether is OK to shoot at
+		 * @param row
+		 * @param column
+		 * @return
+		 */
+		public boolean okToShootAt(int row, int column) {
+			if (row >= 10 || row < 0 || column >= 10 || column < 0) {
+				return false;
+			} return true;
+		}
 	
 	
 

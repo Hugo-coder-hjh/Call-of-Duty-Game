@@ -101,6 +101,7 @@ class BaseTest {
         assertEquals(4, odCount);
     }
 
+    
     @Test
     void testOkToPlaceTargetAt() {
         assertFalse(this.base.okToPlaceTargetAt(new Armory(this.base), 1, 7, false));

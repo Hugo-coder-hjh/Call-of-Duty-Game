@@ -39,23 +39,21 @@ public class RocketLauncher extends Weapon {
 	@Override
 	public void shootAt(int row, int column, Base base) {
 	// in case of the illegal situation
-	if (row >= 10 || row < 0 || column >= 10 || column < 0) {
-		System.out.println("Your shoot is out of bound");
-	}
+	if (this.okToShootAt(row, column)) {
 		
 	// count the increment shots
 	// if > 0 means we could shoot
 	if (this.getShotLeft() > 0) {
 		// increases the shotsFired
-		base.getBase().incrementShotsFired();
+		base.incrementShotsCount();
 		// updates the base after getting shot
-		base.getBase().shootAt(row, column);		
+		base.shootAt(row, column);		
 	}
 
 	
-}
 	
 	// decrements the available missile shots
 	this.decrementShotLeft();
 }	
-	
+}	
+}
