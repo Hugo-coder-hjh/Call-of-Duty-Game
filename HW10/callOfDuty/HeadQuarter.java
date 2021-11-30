@@ -32,13 +32,10 @@ public class HeadQuarter extends Target {
 		super(HeadQuarter.LENGTH, HeadQuarter.WIDTH, base);
 		
 	}
-	
-	
-	
+
 
 	@Override
-	void explode() {
-		// TODO Auto-generated method stub
+	public void explode() {
 
 	}
 

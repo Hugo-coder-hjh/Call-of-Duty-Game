@@ -32,8 +32,7 @@ public class Ground extends Target {
 	}
 
 	@Override
-	void explode() {
-
+	public void explode() {
 	}
 	
 	
@@ -46,6 +45,9 @@ public class Ground extends Target {
 		return Ground.NAME;
 	}
 	
+	/**
+	 * the status of isDestroyed of ground will always be false
+	 */
 	@Override
 	public boolean isDestroyed() {
 		return false;
@@ -53,7 +55,7 @@ public class Ground extends Target {
 	
 	@Override
 	public String toString() {
-		return "-";
+		return "-";	
 	}
 	
 

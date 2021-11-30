@@ -33,8 +33,7 @@ public class SentryTower extends Target {
 	}
 
 	@Override
-	void explode() {
-		// TODO Auto-generated method stub
+	public void explode() {
 
 	}
 

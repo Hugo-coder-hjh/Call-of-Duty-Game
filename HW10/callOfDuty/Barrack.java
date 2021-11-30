@@ -34,8 +34,7 @@ public class Barrack extends Target {
 	
 
 	@Override
-	void explode() {
-		// TODO Auto-generated method stub
+	public void explode() {
 
 	}
 

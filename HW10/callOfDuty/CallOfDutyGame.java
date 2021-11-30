@@ -39,7 +39,7 @@ Scanner scanner = new Scanner(System.in);
 					System.out.println("Rocketlauncher: " + rl.getShotLeft() + " Missile: " + missile.getShotLeft());
 					//use the % to switch the weapon.When the currentWeapon number increase, it will change the weapon
 					System.out.println("Your current weapon is: " + weapons[currentWeapon%2].getWeaponType());
-					System.out.println("Enter the location or q to switch a weapon.");
+					System.out.println("Enter row, column, or q to switch a weapon.");
 					
 					try {
 						String input = scanner.next();
@@ -49,7 +49,7 @@ Scanner scanner = new Scanner(System.in);
 							continue;
 						}
 						
-						//get the location of shoot
+						//get the (row, column) of shoot
 						String[] loc = input.split(",");
 						row = Integer.parseInt(loc[0]);
 						column = Integer.parseInt(loc[1]);

@@ -32,13 +32,23 @@ public class OilDrum extends Target {
 	}
 
 	@Override
-	void explode() {
-		for(int i = -2; i < this.getHit().length + 2; i++) {
-			for(int j = -2; j < this.getHit()[0].length + 2; j++) {
-				this.getBase().shootAt(i + this.getCoordinate()[0], j + this.getCoordinate()[1]);
+	public void explode() {
+		// // iterate from the start of the explosion(5*5) to the end of the explosion, getshot at each of the coordinate
+		for (int i = this.getCoordinate()[0] - 2; i < this.getCoordinate()[0] + 3; i++) {
+			for (int j = this.getCoordinate()[1] - 2; j < this.getCoordinate()[1] + 3; j++) {
+				if(this.getBase().okToShootAt(i, j)) {
+					// get the target in the explosion range
+					Target[][] expTar = getBase().getTargetsArray();
+					Target target = expTar[i][j];
+					//shot the target
+					target.getShot(i, j);
+						}
+					}
+				}
 			}
-		}
-	}
+		
+	
+
 	
     /**
      * Returns the name of the target, "oil drum"

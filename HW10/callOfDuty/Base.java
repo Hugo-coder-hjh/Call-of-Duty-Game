@@ -302,7 +302,8 @@ public class Base {
 			for(int j = 0; j < this.getTargetsArray()[i].length; j++) {
 				if(this.getTargetsArray()[i][j].isHitAt(i, j) || this.getTargetsArray()[i][j].isDestroyed()) {
 					System.out.print(this.getTargetsArray()[i][j] + " ");
-				}
+				} 
+			
 				else {
 					System.out.print("." + " ");
 				}
