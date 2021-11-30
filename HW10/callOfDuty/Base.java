@@ -352,20 +352,5 @@ public class Base {
 		this.destroyedTargetCount= i;
 	}
 
-
-	/**
-	 * get one random coordinate
-	 * @return the random coordinate
-	 */
-	int[] getRandomCoordinate() {
-		Random rand = new Random();
-		int[] return_coordinate = new int[2];
-		//get a list of random coordinate
-		return_coordinate[0]=rand.nextInt(10);
-		return_coordinate[1]=rand.nextInt(10);
-		return return_coordinate;
-	}
-	
-	
 	
 }
