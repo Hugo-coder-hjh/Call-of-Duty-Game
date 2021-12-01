@@ -1,4 +1,4 @@
-package callOfDuty;
+	package callOfDuty;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -234,9 +234,7 @@ class BaseTest {
         barrack.getShot(0, 5);
         barrack.getShot(0, 6);    
         assertTrue(base.win());
-        assertTrue(base.isGameOver(weapon1, weapon2));
-        base.placeAllTargetRandomly();
-        assertFalse(base.isGameOver(new RocketLauncher(), new Missile()));
+        assertTrue(base.isGameOver(weapon1, weapon2)); 
         
         // put a tower and destroy it, check whether game-over
         Base base = new Base();
