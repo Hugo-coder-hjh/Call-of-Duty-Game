@@ -42,10 +42,18 @@ class BaseTest {
     void testBase() {
         assertEquals(10, base.getTargetsArray().length);
 
-        // TODO: add more cases
+        // the size of the base
         assertEquals(10, base.getTargetsArray()[0].length);
-        assertEquals(0,base.getDestroyedTargetCount());
-        assertEquals(0,base.getShotsCount());
+        //the placed armory
+        assertEquals("Armory", base.getTargetsArray()[0][0].getTargetName());
+        // the placed barrack
+        assertEquals("Barrack", base.getTargetsArray()[0][4].getTargetName());
+        // the placed sentry tower
+        assertEquals("SentryTower", base.getTargetsArray()[2][4].getTargetName());
+        // the placed tank
+        assertEquals("Tank", base.getTargetsArray()[1][3].getTargetName());
+        // the placed oil drum
+        assertEquals("OilDrum", base.getTargetsArray()[2][1].getTargetName());
     }
 
     @Test
@@ -111,8 +119,13 @@ class BaseTest {
         assertFalse(this.base.okToPlaceTargetAt(new Armory(this.base), 1, 8, true));
         assertTrue(this.base.okToPlaceTargetAt(new Armory(this.base), 1, 8, false));
 
-        // TODO: add more cases
-        
+        // it is OK to place a tank at coordinate of (0, 3)
+        assertTrue(this.base.okToPlaceTargetAt(new Tank(this.base), 0, 3, false));
+        // it is not OK to place a Sentry Tower at (0,3)
+        assertFalse(this.base.okToPlaceTargetAt(new SentryTower(this.base), 0, 3, false));
+        // it is OK to place an vertical armory at (4, 4)
+        assertTrue(this.base.okToPlaceTargetAt(new Armory(this.base), 4, 4, false));
+       
     }
     
     
@@ -126,7 +139,31 @@ class BaseTest {
         assertEquals(3, armory.getHit().length);
         assertEquals(2, armory.getHit()[0].length);
         
-     // TODO: add more cases
+        // place a tank at (0,4)
+        Target tank = new Tank(base);
+        this.base.placeTargetAt(tank, 0, 4, false);
+        assertEquals(0, tank.getCoordinate()[0]);
+        assertEquals(4, tank.getCoordinate()[1]);
+        assertEquals(1, tank.getHit().length);
+        assertEquals(1, tank.getHit()[0].length);
+        
+        // place a barrack at (4,4)
+        Target barrack = new Barrack(base);
+        this.base.placeTargetAt(barrack, 4, 4, true);
+        assertEquals(4, barrack.getCoordinate()[0]);
+        assertEquals(4, barrack.getCoordinate()[1]);
+        assertEquals(1, barrack.getHit().length);
+        assertEquals(3, barrack.getHit()[0].length);
+        
+        // place a oil drum at (9,9)
+        Target oildrum = new OilDrum(base);
+        this.base.placeTargetAt(oildrum, 9, 9, false);
+        assertEquals(9, oildrum.getCoordinate()[0]);
+        assertEquals(9, oildrum.getCoordinate()[1]);
+        assertEquals(1, oildrum.getHit().length);
+        assertEquals(1, oildrum.getHit()[0].length);
+  
+        
     }
     
     
@@ -137,7 +174,21 @@ class BaseTest {
         this.base.placeTargetAt(arm, 0, 0, true);
         assertTrue(base.isOccupied(0, 0));
 
-        // TODO: add more cases
+        // place a tank at (0,4)
+        Target tank = new Tank(base);
+        this.base.placeTargetAt(tank, 0, 4, false);
+        assertTrue(base.isOccupied(0, 4));
+        
+        // place a barrack at (4,4)
+        Target barrack = new Barrack(base);
+        this.base.placeTargetAt(barrack, 4, 4, true);
+        assertTrue(base.isOccupied(4, 4));
+        
+        // place a oil drum
+        Target oildrum = new OilDrum(base);
+        this.base.placeTargetAt(oildrum, 9, 9, false);
+        assertTrue(base.isOccupied(9, 9));
+        
     }
 
     @Test
@@ -149,7 +200,23 @@ class BaseTest {
         base.shootAt(5, 5);
         assertTrue(arm.isHitAt(5, 5));
 
-        // TODO: add more cases
+        // place a tank at (0,4) and hit
+        Target tank = new Tank(base);
+        this.base.placeTargetAt(tank, 0, 4, false);
+        base.shootAt(0, 4);
+        assertTrue(tank.isHitAt(0, 4));
+        
+        // place a barrack at (4,4) and not shot
+        Target barrack = new Barrack(base);
+        this.base.placeTargetAt(barrack, 4, 4, true);
+        assertFalse(barrack.isHitAt(4, 4));
+        
+        // place a oil drum and shoot elsewhere
+        Target oildrum = new OilDrum(base);
+        this.base.placeTargetAt(oildrum, 9, 9, false);
+        base.shootAt(0, 0);
+        assertFalse(oildrum.isHitAt(9, 9));
+    
     }
 
     @Test
@@ -158,15 +225,33 @@ class BaseTest {
         assertFalse(base.isGameOver(new RocketLauncher(), new Missile()));
 
         // TODO: add more cases
+        // create two weapon
+        RocketLauncher weapon1= new RocketLauncher();
+        Missile weapon2 = new Missile();
+    
+        // put a tower and destroy it, check whether game-over
+            SentryTower tower = new SentryTower(base);
+            base.placeTargetAt(tower, 1, 1, true);
+            assertFalse(base.win());
+            base.shootAt(1, 1);
+            assertTrue(base.win());
+            assertTrue(base.isGameOver(weapon1, weapon2));
+            base.placeAllTargetRandomly();
+            assertFalse(base.isGameOver(new RocketLauncher(), new Missile()));
+            
     }
 
     @Test
     void testWin() {
         assertFalse(this.base.win());
 
-        // TODO: add more cases
+        // shot at the oil drum
+        od.getShot(2, 1);
+        barrack.getShot(0, 5);
+        barrack.getShot(0, 6);    
+        assertTrue(this.base.win());
     }
-
+    
     @Test
     void testIncrementAndSetShotsCount() {
 
@@ -175,6 +260,12 @@ class BaseTest {
         assertEquals(1, base.getShotsCount());
 
         // TODO: add more cases
+        Weapon rl = new RocketLauncher();
+        Weapon ml = new Missile();
+        rl.shootAt(1, 1, base);
+        assertEquals(2,base.getShotsCount());
+        ml.shootAt(1, 1, base);
+        assertEquals(3,base.getShotsCount());
     }
 
     @Test
@@ -183,6 +274,8 @@ class BaseTest {
         assertEquals(10, base.getDestroyedTargetCount());
 
         // TODO: add more cases
+        base.setDestroyedTargetCount(0);
+        assertEquals(0, base.getDestroyedTargetCount());
     }
 
     @Test
@@ -191,6 +284,18 @@ class BaseTest {
         assertEquals(0, base.getDestroyedTargetCount());
                 
         // TODO: add more cases
+        // destroy the tower, and count + 1
+        SentryTower tower = new SentryTower(base);
+        base.placeTargetAt(tower, 1, 1, true);
+        base.shootAt(1, 1);
+        assertEquals(1, base.getDestroyedTargetCount());
+        // shoot at the tank but not destroyed, so count does not change
+        Tank tank = new Tank(base);
+        base.placeTargetAt(tank, 1, 1, true);
+        base.shootAt(1, 1);
+        assertEquals(1, base.getDestroyedTargetCount());
+        
+        
     }
 
 
@@ -199,6 +304,7 @@ class BaseTest {
         assertEquals(10, base.getTargetsArray().length);
 
         // TODO: add more cases
+        assertEquals(10, base.getTargetsArray()[0].length);
     }
 
 

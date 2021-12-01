@@ -246,7 +246,7 @@ public class Base {
 	
 	/**
 	 * Returns true if run out of ammunition 
-	 * or Returns true if all targets have been;
+	 * or Returns true if all targets have been destroyed;
 	 * otherwise, return false.
 	 * @param weapon1
 	 * @param weapon2
@@ -267,17 +267,31 @@ public class Base {
 	 * @return true or false
 	 */
 	public boolean win() {
-		for(int i = 0; i < this.getTargetsArray().length; i++) {
-			for(int j = 0; j < this.getTargetsArray().length; j++) {
-				if(this.getTargetsArray()[i][j].isDestroyed() == false) {
-					if(this.getTargetsArray()[i][j].getTargetName() != "ground") {
-						return false;
-					}
-				}
-			}
-		}
-		return false;
-	}
+		  int destroyedTar = 0;
+		  int targetNum = 0;
+		  // iterate over the 10*10 array to check if all the targets have been destroyed
+		  for(int i = 0; i < 10; i ++) {
+		   for (int j = 0; j < 10; j ++) {
+		    // get the target at every coordinate
+		    Target[][] tarArr = this.getTargetsArray();
+		    Target target = tarArr[i][j];
+		    // if the target is not grounds, then increment the target count
+		    if(target.getTargetName() != "ground") {
+		     targetNum ++;
+		    }
+		    // if the target is not destroyed
+		    if (target.isDestroyed() == true) {
+		     destroyedTar ++;
+		    }
+		   }
+		  }
+		  // if all of the targets are destroyed
+		  if (destroyedTar == targetNum) {
+		   return true;
+		  } else {
+		   return false;
+		  }
+		 }
 	
 	/**
 	 * Prints the Base.

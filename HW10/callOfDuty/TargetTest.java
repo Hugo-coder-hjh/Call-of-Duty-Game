@@ -45,32 +45,63 @@ class TargetTest {
         // Barrack
         assertEquals(1, barrack.getHit().length);
         assertEquals(3, barrack.getHit()[0].length);
+        
+        // sentry tower
+        assertEquals(1, st.getHit().length);
+        assertEquals(1, st.getHit()[0].length);
+        
+        // tank
+        assertEquals(1, tank.getHit().length);
+        assertEquals(1, tank.getHit()[0].length);
 
-
-        // TODO: add more cases
+        // oil drum
         assertEquals(1, od.getHit().length);
-        assertEquals(1, od.getHit()[0].length);
-   
-        
-        
+        assertEquals(1, od.getHit()[0].length);      
         
     }
 
+    
     @Test
     void testToString() {
         assertEquals("O", st.toString());
         assertEquals("T", tank.toString());
-
-        // TODO: add more cases
+        
+        // armory before shot
+        assertEquals("O", armory.toString());
+        armory.getShot(0, 0);
+        // armory not destroyed
+        assertEquals("O", armory.toString());
+        
+        // oil drum before shot
+        assertEquals("O", od.toString());
+        od.getShot(2, 1);
+        // oil drum after get shot
+        assertEquals("X", od.toString());
+        
+        // ground
+        Target ground = new Ground(base);
+        base.placeTargetAt(ground, 6, 6, false);
+        ground.getShot(6, 6);
+        assertEquals("-", ground.toString());
+      
+     
+        
     }
 
+    
     @Test
     void testGetTargetName() {
         assertEquals("tank", tank.getTargetName().toLowerCase());
         assertEquals("sentrytower", st.getTargetName().toLowerCase());
         assertEquals("oildrum", od.getTargetName().toLowerCase());
-
-        // TODO: add more cases
+        
+        // armory
+        assertEquals("armory", armory.getTargetName().toLowerCase());
+        // ground
+        Target ground = new Ground(base);
+        base.placeTargetAt(ground, 6, 6, false);
+        assertEquals("ground", ground.getTargetName().toLowerCase());
+ 
     }
 
     @Test
@@ -78,8 +109,23 @@ class TargetTest {
         assertFalse(armory.isDestroyed());
         od.explode();
         assertTrue(armory.isDestroyed());
-
-        // TODO: add more cases
+        
+        // the explosion of oil drum can trigger the explosion of the armory
+        // but the explosion can not destroy that barrack at (0, 4)
+        assertFalse(barrack.isDestroyed());
+        
+        // place a tank at (8, 8), place a sentry tower at (8,9), and a oil drum at (9,0)
+        Target tank = new Tank(base);
+        base.placeTargetAt(tank, 8, 8, false);
+        Target sentryTow = new SentryTower(base);
+        base.placeTargetAt(sentryTow, 8, 9, false);
+        Target oilDr = new OilDrum(base);
+        base.placeTargetAt(oilDr, 9, 0, false);
+        tank.explode();
+        // sentry tower will get destroyed
+        assertTrue(sentryTow.isDestroyed());
+        // oil drum will not get destroyed
+        assertFalse(oilDr.isDestroyed());          
     }
 
 
@@ -90,9 +136,16 @@ class TargetTest {
         this.base.placeTargetAt(am, 5, 5, false);
         am.getShot(5, 6);
         assertEquals(1, am.getHit()[0][1]);
+              
+        // shot at the oil drum placed at (2, 1)
+        od.getShot(2, 1);
+        assertEquals(1, od.getHit()[0][0]);
         
+        // shot at the barrack
+        barrack.getShot(0, 4);
+        // [0][0] will mark as 1, [0][2] will not mark the shot 
+        assertEquals(0, barrack.getHit()[0][2]);
         
-        // TODO: add more cases
     }
 
  
@@ -104,10 +157,15 @@ class TargetTest {
         assertTrue(od.isDestroyed());
         assertTrue(tank.isDestroyed());
 
-        // TODO: add more cases
+        // the armory will get destroyed after shoot at the oil drum
+        assertTrue(armory.isDestroyed());
+        
+        // the barrack will not get destroyed
+        assertFalse(barrack.isDestroyed());
 
     }
 
+    
     @Test
     void testIsHitAt() {
         Target am = new Armory(this.base);
@@ -117,7 +175,14 @@ class TargetTest {
         am.getShot(5, 5);
         assertTrue(am.isHitAt(5, 5));
 
-        // TODO: add more cases
+        // shoot at the armory
+        assertFalse(armory.isHitAt(0, 0));
+        armory.getShot(0, 0);
+        assertTrue(armory.isHitAt(0, 0));
+        
+        // shoot at the armory, get the status of oil drum
+        assertFalse(od.isHitAt(2, 1));
+        
     }
 
 }
