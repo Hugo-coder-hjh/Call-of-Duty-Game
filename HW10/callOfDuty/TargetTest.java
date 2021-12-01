@@ -48,6 +48,12 @@ class TargetTest {
 
 
         // TODO: add more cases
+        assertEquals(1, od.getHit().length);
+        assertEquals(1, od.getHit()[0].length);
+   
+        
+        
+        
     }
 
     @Test

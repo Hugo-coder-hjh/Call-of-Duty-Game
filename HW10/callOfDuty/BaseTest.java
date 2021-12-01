@@ -43,6 +43,9 @@ class BaseTest {
         assertEquals(10, base.getTargetsArray().length);
 
         // TODO: add more cases
+        assertEquals(10, base.getTargetsArray()[0].length);
+        assertEquals(0,base.getDestroyedTargetCount());
+        assertEquals(0,base.getShotsCount());
     }
 
     @Test
