@@ -210,7 +210,7 @@ public abstract class Target {
 		for (int i =0; i < this.getHit().length; i ++) {
 			for(int j = 0; j < this.getHit()[0].length; j ++) {
 				//if the [i][j] part of the hit array has been hit, increment the hitNum
-				if (this.getHit()[i][j] == 1) {
+				if (this.getHit()[i][j] >= 1) {
 					hitNum ++;
 					}
 				}

@@ -21,13 +21,13 @@ Scanner scanner = new Scanner(System.in);
 			//create the weapons
 			Weapon rl = new RocketLauncher();
 			Weapon missile = new Missile();
-			//create the array to place the weapon(it is for switching)
+			//create the array to place the weapon
 			Weapon[] weapons = new Weapon[] {rl, missile};
 			int currentWeapon = 0;
 			
 			
 			while(!base.isGameOver(rl, missile)) {
-				//when the game continues, we need print the base to inform the current situation
+				//show the base map, which is updated after the user's operation
 				base.print();
 				
 				int row;
@@ -39,7 +39,7 @@ Scanner scanner = new Scanner(System.in);
 					System.out.println("Rocketlauncher: " + rl.getShotLeft() + " Missile: " + missile.getShotLeft());
 					//use the % to switch the weapon.When the currentWeapon number increase, it will change the weapon
 					System.out.println("Your current weapon is: " + weapons[currentWeapon%2].getWeaponType());
-					System.out.println("Enter row, column, or q to switch a weapon.");
+					System.out.println("Enter row, column, or q to switch a weapon");
 					
 					try {
 						String input = scanner.next();
@@ -64,6 +64,9 @@ Scanner scanner = new Scanner(System.in);
 							continue;
 						}
 							weapons[currentWeapon%2].shootAt(row, column, base);
+							if (base.getTargetsArray()[row][column].isDestroyed()) {
+								System.out.println("You have destroyed a " + base.getTargetsArray()[row][column].getTargetName());
+							}
 						}catch(Exception e) {
 						System.out.println("invalid input");
 						continue;
@@ -84,9 +87,8 @@ Scanner scanner = new Scanner(System.in);
 				System.out.println("You LOST!");
 				System.out.println("You ran out of ammunition!");
 			}
-			//System.out.println(base.getShotsFired() + " shots were needed!");
 			System.out.println("Do you want to play again?");
-			System.out.println("'Y' for yes. If not click any button.");
+			System.out.println("'Y/y' for yes. If not click any button.");
 			String input = scanner.next();
 			if(input.charAt(0) == 'Y'||input.charAt(0) == 'y') {
 				continue;

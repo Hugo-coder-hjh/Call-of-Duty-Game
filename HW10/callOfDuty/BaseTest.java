@@ -229,27 +229,54 @@ class BaseTest {
         RocketLauncher weapon1= new RocketLauncher();
         Missile weapon2 = new Missile();
     
+        // destroy all the target
+        od.getShot(2, 1);
+        barrack.getShot(0, 5);
+        barrack.getShot(0, 6);    
+        assertTrue(base.win());
+        assertTrue(base.isGameOver(weapon1, weapon2));
+        base.placeAllTargetRandomly();
+        assertFalse(base.isGameOver(new RocketLauncher(), new Missile()));
+        
         // put a tower and destroy it, check whether game-over
-            SentryTower tower = new SentryTower(base);
-            base.placeTargetAt(tower, 1, 1, true);
-            assertFalse(base.win());
-            base.shootAt(1, 1);
-            assertTrue(base.win());
-            assertTrue(base.isGameOver(weapon1, weapon2));
-            base.placeAllTargetRandomly();
-            assertFalse(base.isGameOver(new RocketLauncher(), new Missile()));
-            
+        Base base = new Base();
+        RocketLauncher w3= new RocketLauncher();
+        Missile w4 = new Missile();
+        SentryTower tower = new SentryTower(base);
+        base.placeTargetAt(tower, 6, 9, true);
+        assertFalse(base.win());
+        base.shootAt(6, 9);
+        assertTrue(base.win());
+        assertTrue(base.isGameOver(w3, w4));
+        
+        
+                   
     }
 
     @Test
     void testWin() {
         assertFalse(this.base.win());
 
-        // shot at the oil drum
+        // shot at all the target, and test whether game is over
         od.getShot(2, 1);
         barrack.getShot(0, 5);
         barrack.getShot(0, 6);    
         assertTrue(this.base.win());
+        
+        // run out all the bullets, and test whether game is over
+        armory = new Armory(base);
+        base.placeTargetAt(armory, 6, 7, true);
+        
+        // add a target and destroy it 
+        base = new Base();
+        OilDrum od = new OilDrum(base);
+        base.placeTargetAt(od, 8, 8, true);
+        // have an intact target 
+        assertFalse(base.win());
+        // have no target
+        base.shootAt(8, 8);
+        assertTrue(base.win());
+ 
     }
     
     @Test
