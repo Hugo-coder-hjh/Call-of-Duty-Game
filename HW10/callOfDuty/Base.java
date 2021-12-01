@@ -30,7 +30,7 @@ public class Base {
 		// initialize the variables
 		this.shotsCount = 0;
 		this.destroyedTargetCount = 0;
-		//initial the base
+		//initialize the base
 		for(int i =0; i <10; i++) {
 			for(int j=0;j<10;j++) {
 			this.placeTargetAt(new Ground(this), i, j, true);
@@ -138,13 +138,12 @@ public class Base {
 		else {
 			hit = new int[width][length];
 		}
-		//determine whether it's out of the base;
+		//in case of the shoot out of the base;
 		if(hit.length+row-1>9 ||hit[0].length+column-1>9 ||row<0 || column <0) {
 			return false;
 			}
-		//check whether it's tanks or oilDrum.
+		//check whether it's tanks or oilDrum, which could place anywhere within ground.
 		if(target.getTargetName().equals("Tank")||target.getTargetName().equals("OilDrum")) {
-			//if it's tanks or oilDrum, it could place anywhere within ground.
 			//if it's ground return true.
 			if(this.getTargetsArray()[row][column].getTargetName().equals("ground")) {
 				return true;
@@ -152,7 +151,7 @@ public class Base {
 				return false;
 			}
 		}
-		//determine whether it could place in this place where the surface +1 do not have any target.
+		//if the square + 1 have a target, we could not place the target here
 		for (int i = -1; i < hit.length+1; i++) {
 			for(int j = -1; j < hit[0].length+1; j++) {
 				//determines whether the i+row is inside the base;
@@ -176,20 +175,22 @@ public class Base {
 	 * @param given orientation, whether it is horizontal
 	 */
 	public void placeTargetAt(Target target, int row, int column, boolean horizontal) {
+		// create an array of coordinate
 		int[] coordinate= new int[2];
+		// mark the row, column as an array
 		coordinate[0]=row;
 		coordinate[1]=column;
 		target.setCoordinate(coordinate);
 		target.setHorizontal(horizontal);
 		int length = target.getLength();
 		int width= target.getWidth();
+		// set the hit according to the horizontal status
 		if (horizontal == false) {
 			target.setHit(new int[length][width]);
 		} else {
 			target.setHit(new int[width][length]);	
 		}
-		
-		
+		// place the target at the area which is covered by hit
 		for (int i = 0; i < target.getHit().length; i++) {
 			for(int j = 0; j < target.getHit()[0].length; j++) {
 				this.getTargetsArray()[i + row][j + column] = target;
@@ -241,6 +242,7 @@ public class Base {
 			
 		// update the base after getting shot
 		this.getTargetsArray()[row][column].getShot(row, column);
+		
 	}
 }
 	
@@ -253,9 +255,11 @@ public class Base {
 	 * @return true or false
 	 */
 	public boolean isGameOver(Weapon weapon1, Weapon weapon2) {
+		// win() means all the targets have been destroyed
 		if (this.win()) {
 			return true;
 		}
+		// this means ran out all the bullets
 		else if(weapon1.getShotLeft() == 0 && weapon2.getShotLeft() == 0) {
 			return true;
 		}
@@ -304,13 +308,13 @@ public class Base {
 	 */
 	public void print() {
 		System.out.print("  ");
-		//print column number
+		//print the number of column to help the user to play
 		for(int i = 0; i < this.getTargetsArray().length; i++) {
 			System.out.print(i + " ");
 		}
 		
 		System.out.println();
-		//print row number
+		//print the number of row to help the user to play
 		for(int i = 0; i < this.getTargetsArray().length; i++) {
 			System.out.print(i + " ");
 			for(int j = 0; j < this.getTargetsArray()[i].length; j++) {
@@ -326,14 +330,12 @@ public class Base {
 		}
 	}
 	
+	/**
+	 * This method will be called from shootAt(int row, int column) from Weapon class.
+	 */
 	public void incrementShotsCount() {
 		this.shotsCount++;
 	}
-	
-	
-	
-	
-	
 	
 	// getter methods
 	

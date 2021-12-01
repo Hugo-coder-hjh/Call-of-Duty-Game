@@ -44,7 +44,7 @@ public class RocketLauncher extends Weapon {
 	// count the increment shots
 	// if > 0 means we could shoot
 	if (this.getShotLeft() > 0) {
-		// increases the shotsFired
+		// increases the shotsCount
 		base.incrementShotsCount();
 		// updates the base after getting shot
 		base.shootAt(row, column);		

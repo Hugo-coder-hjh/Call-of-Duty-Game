@@ -181,12 +181,14 @@ public abstract class Target {
 			if(this.isDestroyed() == true && this.getHasExp() == false) {				
 				// increment the count of destroyed target
 				this.base.setDestroyedTargetCount(this.base.getDestroyedTargetCount() + 1);
+				System.out.println("$$ You have destroyed a " + this.getTargetName());
 				boolean hasExplode = true;
 				this.setHasExp(hasExplode);
 				//destroyed target will explode(for those targets which can not explode, the explode method will do nothing)
 				this.explode();
 				}
 			} else {
+				// when the base is not occupied
 				//get the coordinate of the shot target
 				int[] coordinate = this.getCoordinate();
 				//set the hit count of this specific part of the target(within the hit array) as 1 
@@ -194,9 +196,6 @@ public abstract class Target {
 				this.hit[row - coordinate[0]][column - coordinate[1]] = 1;
 				}
 			}
-
-
-	
 
 	/**
 	 * returns the destroy status of the target
@@ -224,7 +223,6 @@ public abstract class Target {
 		}
      }
 	
-
 	
 	/**
 	 * returns the hit status of the target. This method is used to print the base.

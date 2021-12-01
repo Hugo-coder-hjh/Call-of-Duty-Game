@@ -3,7 +3,8 @@ package callOfDuty;
 import java.util.Scanner;
 
 /**
- * 
+ * In the game, you serve as a soldier and your mission is destroying a 10x10 enemy base. 
+ * You need to destroy all Targets in the base.
  * @author Jiahao He(15953838) & Xinyang Shen(89346044)
  */
 
@@ -29,6 +30,8 @@ Scanner scanner = new Scanner(System.in);
 			while(!base.isGameOver(rl, missile)) {
 				//show the base map, which is updated after the user's operation
 				base.print();
+				System.out.println();
+				System.out.println("**** The number of destroyed targets is "+ base.getDestroyedTargetCount()+" ****");
 				
 				int row;
 				int column;
@@ -37,23 +40,23 @@ Scanner scanner = new Scanner(System.in);
 					//we need print the information of the weapon number
 					System.out.println();
 					System.out.println("Rocketlauncher: " + rl.getShotLeft() + " Missile: " + missile.getShotLeft());
-					//use the % to switch the weapon.When the currentWeapon number increase, it will change the weapon
+					//use the % to switch the weapon, odd/even according to 2 different weapon types
 					System.out.println("Your current weapon is: " + weapons[currentWeapon%2].getWeaponType());
 					System.out.println("Enter row, column, or q to switch a weapon");
 					
 					try {
 						String input = scanner.next();
 						if (input.charAt(0) == 'q'||input.charAt(0) == 'Q') {
-							//increase the number of currentWeapon to change the weapon from odd number to even number or from the even number to odd number
+							//increase the number of currentWeapon to change the weapon
 							currentWeapon ++;
 							continue;
 						}
 						
-						//get the (row, column) of shoot
+						//change the input(row, column) from String type to Integer 
 						String[] loc = input.split(",");
 						row = Integer.parseInt(loc[0]);
 						column = Integer.parseInt(loc[1]);
-						//if the place can not be shot
+						//in case of the out of the bound situation
 						if(row >=10 ||row <0 || column >=10 || column <0) {
 							System.out.println("You can not shoot at here.");
 							continue;
@@ -63,30 +66,32 @@ Scanner scanner = new Scanner(System.in);
 							System.out.println("There is no "+weapons[currentWeapon%2].getWeaponType()+" left.");
 							continue;
 						}
-							weapons[currentWeapon%2].shootAt(row, column, base);
-							if (base.getTargetsArray()[row][column].isDestroyed()) {
-								System.out.println("You have destroyed a " + base.getTargetsArray()[row][column].getTargetName());
-							}
+							weapons[currentWeapon%2].shootAt(row, column, base);							
 						}catch(Exception e) {
-						System.out.println("invalid input");
+						System.out.println("invalid input, please enter again");
 						continue;
 					}break;
 				}
 			}
 			//at the end of the game, print the base
 			base.print();
+			System.out.println();
 			System.out.println("Game Over");
-			System.out.println("You current score is "+ base.getDestroyedTargetCount());
+			System.out.println("****************************************");
+			System.out.println("The number of destroyed targets is "+ base.getDestroyedTargetCount());
 			System.out.println((18-base.getDestroyedTargetCount()) + " target(s) left.");
 			System.out.println("You've used " + base.getShotsCount()+ " ammunition");
 			if(base.win()) {
-				System.out.println("You WIN!");
+				System.out.println("Congradulations! You WIN!");
 				System.out.println("Every Target has been destroyed!");
+				System.out.println("****************************************");
 			}
 			else {
-				System.out.println("You LOST!");
+				System.out.println("Sorry, you LOST!");
 				System.out.println("You ran out of ammunition!");
+				System.out.println("****************************************");
 			}
+			System.out.println();
 			System.out.println("Do you want to play again?");
 			System.out.println("'Y/y' for yes. If not click any button.");
 			String input = scanner.next();
