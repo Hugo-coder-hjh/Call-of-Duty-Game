@@ -54,6 +54,11 @@ Scanner scanner = new Scanner(System.in);
 						
 						//change the input(row, column) from String type to Integer 
 						String[] loc = input.split(",");
+						int num = loc.length;
+						// if input size is larger than 2, throw an exception
+						if (num > 2) {
+							throw new Exception("out of index");
+						} else {
 						row = Integer.parseInt(loc[0]);
 						column = Integer.parseInt(loc[1]);
 						//in case of the out of the bound situation
@@ -67,7 +72,7 @@ Scanner scanner = new Scanner(System.in);
 							continue;
 						}
 							weapons[currentWeapon%2].shootAt(row, column, base);							
-						}catch(Exception e) {
+						}}catch(Exception e) {
 						System.out.println("invalid input, please enter again");
 						continue;
 					}break;

@@ -2,6 +2,12 @@ package callOfDuty;
 
 import java.util.Random;
 
+/**
+ * This contains a 10x10 array of Targets, representing a ¡°base¡±.
+ * And some methods to manipulate it. 
+ * @author Jiahao He
+ */
+
 public class Base {
    // instance variables
 	/**
